@@ -601,15 +601,15 @@
                         <h3 class="text-xl font-bold mb-2">HSK 4 考试倒计时增强版</h3>
                         <p class="text-gray-400">为2026年4月11日的考试提供全方位备考支持</p>
                         <div class="flex space-x-4 mt-4 justify-center md:justify-start">
-                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
+                            <a href="https://github.com/Tanvir-yzu/" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
                                 <i class="fab fa-github"></i>
                             </a>
                             <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
+                            <button id="weixinTrigger" type="button" onclick="openWeChatModalFallback()" title="查看微信二维码" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="查看微信二维码">
                                 <i class="fab fa-weixin"></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
                     <div class="text-center md:text-right">
@@ -620,6 +620,20 @@
                 </div>
             </div>
         </footer>
+
+                <!-- 微信弹窗 -->
+                     <div id="weChatModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4">
+                            <div id="weChatModalPanel" class="glass-effect rounded-2xl p-4 md:p-6 w-full max-w-md text-center">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-lg font-bold">微信联系</h4>
+                                        <button id="weChatModalClose" type="button" onclick="closeWeChatModalFallback()" class="text-gray-400 hover:text-white text-xl" aria-label="关闭">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                                <img id="weChatImage" src="wechat.png" alt="WeChat QR" class="w-full max-w-xs mx-auto rounded-xl border border-white/20 bg-white object-contain">
+                                <p id="weChatImageErrorText" class="hidden text-sm text-red-300 mt-3">图片加载失败，请确认 wechat.png 与 index.html 在同一目录。</p>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -688,6 +702,12 @@
                 // 语音控制
                 voiceEnabled: false,
                 voiceSynth: null,
+
+                // 弹窗控制
+                showWeChatModal: false,
+                weChatImageSrc: './wechat.png',
+                weChatImageError: false,
+                weChatImageFallbackTried: false,
                 
                 // 考试日期
                 examDate: new Date('2026-04-11T09:00:00'),
@@ -862,6 +882,24 @@
                     }
                     this.saveToStorage();
                 },
+
+                // 打开微信弹窗
+                openWeChatModal() {
+                    this.weChatImageError = false;
+                    this.weChatImageFallbackTried = false;
+                    this.weChatImageSrc = `./wechat.png?t=${Date.now()}`;
+                    this.showWeChatModal = true;
+                },
+
+                // 微信图片加载失败处理
+                handleWeChatImageError() {
+                    if (!this.weChatImageFallbackTried) {
+                        this.weChatImageFallbackTried = true;
+                        this.weChatImageSrc = `wechat.png?t=${Date.now()}`;
+                        return;
+                    }
+                    this.weChatImageError = true;
+                },
                 
                 // 语音提醒
                 speakReminder() {
@@ -999,6 +1037,49 @@
                 }
             }
         }
+
+        function openWeChatModalFallback() {
+            const modal = document.getElementById('weChatModal');
+            const image = document.getElementById('weChatImage');
+            const errorText = document.getElementById('weChatImageErrorText');
+            if (!modal || !image || !errorText) return;
+
+            errorText.classList.add('hidden');
+            image.src = `wechat.png?t=${Date.now()}`;
+            image.onerror = () => {
+                image.onerror = null;
+                image.src = `./wechat.png?t=${Date.now()}`;
+                image.onerror = () => {
+                    errorText.classList.remove('hidden');
+                };
+            };
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeWeChatModalFallback() {
+            const modal = document.getElementById('weChatModal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('weChatModal');
+            const panel = document.getElementById('weChatModalPanel');
+            if (!modal || !panel) return;
+
+            modal.addEventListener('click', (event) => {
+                if (!panel.contains(event.target)) {
+                    closeWeChatModalFallback();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeWeChatModalFallback();
+                }
+            });
+        });
     </script>
 </body>
 </html>
