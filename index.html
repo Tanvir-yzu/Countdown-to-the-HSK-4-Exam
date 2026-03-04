@@ -246,6 +246,41 @@
         .theme-transition {
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* 亮色主题覆盖 */
+        .light .glass-effect {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+        }
+
+        .light .text-white {
+            color: #111827 !important;
+        }
+
+        .light .text-gray-300 {
+            color: #374151 !important;
+        }
+
+        .light .text-gray-400 {
+            color: #4b5563 !important;
+        }
+
+        .light .text-gray-500 {
+            color: #6b7280 !important;
+        }
+
+        .light .bg-gray-700 {
+            background-color: #e5e7eb !important;
+            color: #111827 !important;
+        }
+
+        .light .bg-gray-800 {
+            background-color: #f3f4f6 !important;
+        }
+
+        .light .bg-gray-900 {
+            background-color: #e5e7eb !important;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white min-h-screen overflow-x-hidden">
@@ -423,8 +458,10 @@
                             <template x-for="day in calendarDays" :key="day.date">
                                 <div class="aspect-square rounded-lg flex flex-col items-center justify-center p-2 cursor-pointer transition-all"
                                      :class="{
-                                         'bg-gray-800': day.isCurrentMonth,
-                                         'bg-gray-900': !day.isCurrentMonth,
+                                         'bg-gray-800': day.isCurrentMonth && isDarkTheme,
+                                         'bg-white/70': day.isCurrentMonth && !isDarkTheme,
+                                         'bg-gray-900': !day.isCurrentMonth && isDarkTheme,
+                                         'bg-gray-100/80': !day.isCurrentMonth && !isDarkTheme,
                                          'border-2 border-cyan-500': day.isToday,
                                          'bg-gradient-to-br from-purple-600/30 to-pink-600/30': day.hasStudyPlan
                                      }"
@@ -432,7 +469,8 @@
                                      :title="day.hasStudyPlan ? '有学习计划' : ''">
                                     <div class="font-semibold mb-1" 
                                          :class="{
-                                             'text-white': day.isCurrentMonth,
+                                             'text-white': day.isCurrentMonth && isDarkTheme,
+                                             'text-gray-900': day.isCurrentMonth && !isDarkTheme,
                                              'text-gray-600': !day.isCurrentMonth,
                                              'text-cyan-300': day.isToday
                                          }" 
@@ -556,7 +594,7 @@
         </main>
         
         <!-- 页脚 -->
-        <footer class="bg-gray-900/80 backdrop-blur-lg py-8 mt-12">
+        <footer :class="isDarkTheme ? 'bg-gray-900/80 border-gray-700/60' : 'bg-white/80 border-gray-200/80'" class="backdrop-blur-lg py-8 mt-12 border-t">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="mb-6 md:mb-0 text-center md:text-left">
