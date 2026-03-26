@@ -12,6 +12,57 @@
     <style>
         * {
             font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+        
+        h4 {
+            font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+        
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+        
+        .text-4xl {
+            font-size: 2.25rem;
+        }
+        
+        .text-5xl {
+            font-size: 3rem;
+        }
+        
+        .text-6xl {
+            font-size: 3.75rem;
         }
         
         /* 粒子背景容器 */
@@ -75,6 +126,108 @@
             transform-origin: 50% 50%;
         }
         
+        /* 新动画类 */
+        .scale-in {
+            animation: scaleIn 0.4s ease-out forwards;
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .fade-in-down {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+        
+        .fade-in-left {
+            animation: fadeInLeft 0.6s ease-out forwards;
+        }
+        
+        .fade-in-right {
+            animation: fadeInRight 0.6s ease-out forwards;
+        }
+        
+        .zoom-in {
+            animation: zoomIn 0.3s ease-out forwards;
+        }
+        
+        .zoom-out {
+            animation: zoomOut 0.3s ease-out forwards;
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .flip {
+            animation: flip 0.6s ease-out forwards;
+        }
+        
+        .blur-in {
+            animation: blurIn 0.6s ease-out forwards;
+        }
+        
+        .slide-in-from-bottom {
+            animation: slideInFromBottom 0.5s ease-out forwards;
+        }
+        
+        .slide-in-from-top {
+            animation: slideInFromTop 0.5s ease-out forwards;
+        }
+        
+        /* 骨架屏和加载状态 */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0.375rem;
+        }
+        
+        .skeleton-text {
+            height: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.25rem;
+        }
+        
+        .skeleton-circle {
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+        }
+        
+        .skeleton-rect {
+            height: 8rem;
+            border-radius: 0.5rem;
+        }
+        
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            gap: 2rem;
+        }
+        
+        .loading-spinner {
+            width: 4rem;
+            height: 4rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #6366f1;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        .loading-text {
+            font-size: 1.25rem;
+            color: #6366f1;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         .glass-effect {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -97,6 +250,106 @@
         .card-hover:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* 按钮悬停效果 */
+        .btn-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-hover:hover::before {
+            left: 100%;
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* 日历日期悬停效果 */
+        .calendar-day {
+            transition: all 0.2s ease;
+        }
+        
+        .calendar-day:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 减少动画支持 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        /* 确保动画可访问性 */
+        .animate-accessible {
+            animation-duration: 0.6s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* 适当的动画持续时间 */
+        .short-animation {
+            animation-duration: 0.3s;
+        }
+        
+        .medium-animation {
+            animation-duration: 0.6s;
+        }
+        
+        .long-animation {
+            animation-duration: 1s;
+        }
+        
+        /* 工具提示效果 */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 100;
+        }
+        
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: 125%;
         }
         
         .typewriter {
@@ -212,6 +465,128 @@
             100% { background-position: 200% center; }
         }
         
+        /* 新关键帧动画 */
+        @keyframes scaleIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from { 
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from { 
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes zoomOut {
+            from { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            to { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        @keyframes flip {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        
+        @keyframes blurIn {
+            from { 
+                opacity: 0;
+                filter: blur(10px);
+            }
+            to { 
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromTop {
+            from { 
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         /* 自定义滚动条 */
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
@@ -240,6 +615,66 @@
             .mobile-padding {
                 padding: 1.5rem;
             }
+            
+            .mobile-gap {
+                gap: 1rem;
+            }
+            
+            .mobile-w-full {
+                width: 100%;
+            }
+            
+            .mobile-text-center {
+                text-align: center;
+            }
+            
+            /* 倒计时卡片调整 */
+            .glass-effect {
+                margin: 0 -1rem;
+                border-radius: 0;
+            }
+            
+            /* 环形倒计时调整 */
+            .relative.w-48.h-48 {
+                width: 320px;
+                height: 320px;
+            }
+            
+            /* 时间数字调整 */
+            .grid.grid-cols-3.gap-6 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            /* 日历调整 */
+            .grid.grid-cols-7.gap-2 {
+                gap: 0.5rem;
+            }
+            
+            /* 卡片调整 */
+            .card-hover {
+                padding: 1rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* 更小屏幕的调整 */
+            .relative.w-48.h-48 {
+                width: 280px;
+                height: 280px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .text-xl {
+                font-size: 1rem;
+            }
         }
         
         /* 主题切换过渡 */
@@ -249,41 +684,50 @@
 
         /* 亮色主题覆盖 */
         .light .glass-effect {
-            background: rgba(255, 255, 255, 0.72);
-            border: 1px solid rgba(148, 163, 184, 0.35);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .light .text-white {
-            color: #111827 !important;
+            color: #1e293b !important;
         }
 
         .light .text-gray-300 {
-            color: #374151 !important;
+            color: #334155 !important;
         }
 
         .light .text-gray-400 {
-            color: #4b5563 !important;
+            color: #64748b !important;
         }
 
         .light .text-gray-500 {
-            color: #6b7280 !important;
+            color: #94a3b8 !important;
         }
 
         .light .bg-gray-700 {
-            background-color: #e5e7eb !important;
-            color: #111827 !important;
+            background-color: #f1f5f9 !important;
+            color: #1e293b !important;
         }
 
         .light .bg-gray-800 {
-            background-color: #f3f4f6 !important;
+            background-color: #f8fafc !important;
         }
 
         .light .bg-gray-900 {
-            background-color: #e5e7eb !important;
+            background-color: #f1f5f9 !important;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white min-h-screen overflow-x-hidden">
+<body class="bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 text-white min-h-screen overflow-x-hidden">
+    <!-- 加载状态 -->
+    <div id="loadingContainer" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900">
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">加载中...</div>
+        </div>
+    </div>
+    
     <!-- 粒子动画背景 -->
     <div id="particles-js"></div>
     
@@ -308,28 +752,28 @@
         </button>
         
         <!-- 主内容区 -->
-        <main class="flex-1 container mx-auto px-4 py-8">
+        <main class="flex-1 container mx-auto px-4 py-12">
             <!-- 头部区域 -->
-            <header class="text-center mb-12 slide-down">
-                <div class="inline-block mb-4">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-4 rotate-slow">
-                        <i class="fas fa-graduation-cap text-white text-3xl"></i>
+            <header class="text-center mb-16 slide-down">
+                <div class="inline-block mb-6">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-6 rotate-slow">
+                        <i class="fas fa-graduation-cap text-white text-4xl"></i>
                     </div>
                 </div>
                 
-                <h1 class="text-4xl md:text-6xl font-black mb-4">
+                <h1 class="text-4xl md:text-6xl font-black mb-6">
                     <span class="gradient-text neon-text">HSK 4</span> 
                     <span class="text-white">考试倒计时</span>
                 </h1>
                 
-                <p class="text-xl md:text-2xl text-gray-300 mb-2 typewriter max-w-3xl mx-auto">
+                <p class="text-xl md:text-2xl text-gray-300 mb-6 typewriter max-w-3xl mx-auto">
                     距离2026年4月11日的考试仅剩
                 </p>
                 
-                <div class="flex items-center justify-center space-x-2 mt-4">
-                    <span class="px-3 py-1 bg-purple-600 rounded-full text-sm font-medium">农历丙午马年</span>
-                    <span class="px-3 py-1 bg-pink-600 rounded-full text-sm font-medium">高效备考</span>
-                    <span class="px-3 py-1 bg-blue-600 rounded-full text-sm font-medium">马到成功</span>
+                <div class="flex flex-wrap items-center justify-center gap-3 mt-6">
+                    <span class="px-4 py-2 bg-indigo-600 rounded-full text-sm font-medium btn-hover">农历丙午马年</span>
+                    <span class="px-4 py-2 bg-purple-600 rounded-full text-sm font-medium btn-hover">高效备考</span>
+                    <span class="px-4 py-2 bg-pink-600 rounded-full text-sm font-medium btn-hover">马到成功</span>
                 </div>
                 
                 <!-- 进度通知 -->
@@ -353,9 +797,9 @@
             
             <!-- 主倒计时卡片 -->
             <div class="max-w-6xl mx-auto">
-                <div class="glass-effect rounded-3xl shadow-2xl p-6 md:p-10 mb-10 slide-up">
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                <div class="glass-effect rounded-3xl shadow-2xl p-8 md:p-12 mb-12 slide-up">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">
                             倒计时: 
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
                                 2026年4月11日
@@ -363,16 +807,16 @@
                         </h2>
                         
                         <!-- 动态进度条 -->
-                        <div class="max-w-2xl mx-auto mb-6">
-                            <div class="flex justify-between text-sm mb-2">
+                        <div class="max-w-2xl mx-auto mb-8">
+                            <div class="flex justify-between text-sm mb-3">
                                 <span>已过去: <span x-text="daysPassed"></span> 天</span>
                                 <span>剩余: <span x-text="days"></span> 天</span>
                             </div>
                             <div class="h-4 bg-gray-700 rounded-full overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-full transition-all duration-1000 ease-out"
+                                <div class="h-full bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-500 rounded-full transition-all duration-1000 ease-out"
                                      :style="'width: ' + progressPercentage + '%'"></div>
                             </div>
-                            <div class="flex justify-between text-xs text-gray-400 mt-1">
+                            <div class="flex justify-between text-xs text-gray-400 mt-2">
                                 <span>开始准备</span>
                                 <span>考试日</span>
                             </div>
@@ -380,10 +824,10 @@
                     </div>
                     
                     <!-- 环形倒计时 -->
-                    <div class="flex flex-wrap justify-center items-center gap-8 mb-10">
+                    <div class="flex flex-wrap justify-center items-center gap-10 mb-12">
                         <!-- 天数 -->
                         <div class="text-center">
-                            <div class="relative w-40 h-40">
+                            <div class="relative w-48 h-48">
                                 <svg class="w-full h-full" viewBox="0 0 100 100">
                                     <circle cx="50" cy="50" r="45" fill="none" stroke="#2d3748" stroke-width="8"/>
                                     <circle class="progress-ring" cx="50" cy="50" r="45" fill="none" 
@@ -392,26 +836,26 @@
                                             :stroke-dashoffset="283 - (283 * daysProgress)"/>
                                     <defs>
                                         <linearGradient id="gradientDays" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                                            <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                                            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
                                         </linearGradient>
                                     </defs>
                                 </svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <div class="text-4xl md:text-5xl font-bold text-white" 
+                                    <div class="text-5xl md:text-6xl font-bold text-white" 
                                          x-text="formatNumber(days)"
                                          :class="{'updated': daysUpdated}"
                                          @countdown-update.window="daysUpdated = true; setTimeout(() => daysUpdated = false, 300)"></div>
-                                    <div class="text-gray-300 font-semibold">天</div>
+                                    <div class="text-gray-300 font-semibold mt-2">天</div>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- 时间数字 -->
-                        <div class="grid grid-cols-3 gap-4">
+                        <div class="grid grid-cols-3 gap-6">
                             <!-- 小时 -->
-                            <div class="bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-2xl p-6 text-center card-hover">
-                                <div class="text-4xl md:text-5xl font-bold text-cyan-300 mb-2 pulse-slow"
+                            <div class="bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-2xl p-8 text-center card-hover">
+                                <div class="text-4xl md:text-5xl font-bold text-cyan-300 mb-3 pulse-slow"
                                      x-text="formatNumber(hours)"
                                      :class="{'updated': hoursUpdated}"
                                      @countdown-update.window="hoursUpdated = true; setTimeout(() => hoursUpdated = false, 300)"></div>
@@ -419,8 +863,8 @@
                             </div>
                             
                             <!-- 分钟 -->
-                            <div class="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-2xl p-6 text-center card-hover">
-                                <div class="text-4xl md:text-5xl font-bold text-pink-300 mb-2"
+                            <div class="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 rounded-2xl p-8 text-center card-hover">
+                                <div class="text-4xl md:text-5xl font-bold text-purple-300 mb-3"
                                      x-text="formatNumber(minutes)"
                                      :class="{'updated': minutesUpdated}"
                                      @countdown-update.window="minutesUpdated = true; setTimeout(() => minutesUpdated = false, 300)"></div>
@@ -428,8 +872,8 @@
                             </div>
                             
                             <!-- 秒数 -->
-                            <div class="bg-gradient-to-br from-green-900/30 to-emerald-900/30 rounded-2xl p-6 text-center card-hover">
-                                <div class="text-4xl md:text-5xl font-bold text-green-300 mb-2"
+                            <div class="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-2xl p-8 text-center card-hover">
+                                <div class="text-4xl md:text-5xl font-bold text-pink-300 mb-3"
                                      x-text="formatNumber(seconds)"
                                      :class="{'updated': secondsUpdated}"
                                      @countdown-update.window="secondsUpdated = true; setTimeout(() => secondsUpdated = false, 300)"></div>
@@ -456,7 +900,7 @@
                         </div>
                         <div class="grid grid-cols-7 gap-2">
                             <template x-for="day in calendarDays" :key="day.date">
-                                <div class="aspect-square rounded-lg flex flex-col items-center justify-center p-2 cursor-pointer transition-all"
+                                <div class="aspect-square rounded-lg flex flex-col items-center justify-center p-2 cursor-pointer transition-all calendar-day tooltip"
                                      :class="{
                                          'bg-gray-800': day.isCurrentMonth && isDarkTheme,
                                          'bg-white/70': day.isCurrentMonth && !isDarkTheme,
@@ -594,12 +1038,12 @@
         </main>
         
         <!-- 页脚 -->
-        <footer :class="isDarkTheme ? 'bg-gray-900/80 border-gray-700/60' : 'bg-white/80 border-gray-200/80'" class="backdrop-blur-lg py-8 mt-12 border-t">
+        <footer :class="isDarkTheme ? 'bg-slate-900/80 border-slate-700/60' : 'bg-white/80 border-slate-200/80'" class="backdrop-blur-lg py-8 mt-16 border-t">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="mb-6 md:mb-0 text-center md:text-left">
                         <h3 class="text-xl font-bold mb-2">HSK 4 考试倒计时增强版</h3>
-                        <p class="text-gray-400">为2026年4月11日的考试提供全方位备考支持</p>
+                        <p class="text-gray-400 mb-4">为2026年4月11日的考试提供全方位备考支持</p>
                         <div class="flex space-x-4 mt-4 justify-center md:justify-start">
                             <a href="https://github.com/Tanvir-yzu/" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
                                 <i class="fab fa-github"></i>
@@ -612,10 +1056,10 @@
                             </button>
                         </div>
                     </div>
-                    <div class="text-center md:text-right">
+                    <div class="text-center md:text-right w-full md:w-auto">
                         <p class="text-gray-400">© 2026 农历丙午马年 | 使用 Tailwind CSS + Alpine.js 构建</p>
-                        <p class="text-gray-400 text-sm mt-1">Made by Tanvir(TN)</p>
-                        <p class="text-gray-500 text-sm mt-1">版本 2.0 | 最后更新: <span x-text="new Date().toLocaleDateString('zh-CN')"></span></p>
+                        <p class="text-gray-400 text-sm mt-2">Made by Tanvir(TN)</p>
+                        <p class="text-gray-500 text-sm mt-2">版本 2.0 | 最后更新: <span x-text="new Date().toLocaleDateString('zh-CN')"></span></p>
                     </div>
                 </div>
             </div>
@@ -868,9 +1312,9 @@
                 // 应用主题
                 applyTheme() {
                     if (this.isDarkTheme) {
-                        document.body.className = "bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white min-h-screen overflow-x-hidden";
+                        document.body.className = "bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 text-white min-h-screen overflow-x-hidden";
                     } else {
-                        document.body.className = "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 text-gray-900 min-h-screen overflow-x-hidden";
+                        document.body.className = "bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 text-slate-900 min-h-screen overflow-x-hidden";
                     }
                 },
                 
@@ -1056,6 +1500,20 @@
 
             modal.classList.remove('hidden');
         }
+
+        // 页面加载完成后隐藏加载动画
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingContainer = document.getElementById('loadingContainer');
+                if (loadingContainer) {
+                    loadingContainer.style.opacity = '0';
+                    loadingContainer.style.transition = 'opacity 0.5s ease';
+                    setTimeout(function() {
+                        loadingContainer.style.display = 'none';
+                    }, 500);
+                }
+            }, 1000);
+        });
 
         function closeWeChatModalFallback() {
             const modal = document.getElementById('weChatModal');
